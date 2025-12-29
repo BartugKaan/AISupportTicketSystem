@@ -1,15 +1,29 @@
+using AISupportTicketSystem.API.Middleware;
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Serilog Config
+builder.Host.UseSerilog((context, loggerConfiguration) =>
+{
+    loggerConfiguration.ReadFrom.Configuration(context.Configuration);
+});
+
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+app.UseSerilogRequestLogging(options =>
+{
+    options.MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
+});
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -22,4 +36,17 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+Log.Information("Starting web host");
+
+try
+{
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly!");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
