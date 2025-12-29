@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C5D2565B-A813-40F1-AEEC-829F9EFCA74A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{111802A3-E762-4E68-83F9-37BD9E151EE8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{E1D38655-9384-4EFD-B070-613A226501F6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{3CD62086-61B9-4604-B2E1-511397ED8840}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AISupportTicketSystem.Domain", "src\Core\AISupportTicketSystem.Domain\AISupportTicketSystem.Domain.csproj", "{FB5A1FA5-78E9-496A-A5B5-531D3DA29C8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AISupportTicketSystem.Application", "src\Core\AISupportTicketSystem.Application\AISupportTicketSystem.Application.csproj", "{73C0545B-AA84-4205-829C-92608954E07A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AISupportTicketSystem.Persistence", "src\External\AISupportTicketSystem.Persistence\AISupportTicketSystem.Persistence.csproj", "{A2B5124D-5A37-4839-BA28-96CFFA557483}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AISupportTicketSystem.Infrastructure", "src\External\AISupportTicketSystem.Infrastructure\AISupportTicketSystem.Infrastructure.csproj", "{55C7F809-76AC-4E90-87CB-D143E885FB34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AISupportTicketSystem.API", "src\Presentation\AISupportTicketSystem.API\AISupportTicketSystem.API.csproj", "{24DE589B-ABDB-46B4-8CB1-031D76792F84}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{111802A3-E762-4E68-83F9-37BD9E151EE8} = {C5D2565B-A813-40F1-AEEC-829F9EFCA74A}
+		{E1D38655-9384-4EFD-B070-613A226501F6} = {C5D2565B-A813-40F1-AEEC-829F9EFCA74A}
+		{3CD62086-61B9-4604-B2E1-511397ED8840} = {C5D2565B-A813-40F1-AEEC-829F9EFCA74A}
+		{FB5A1FA5-78E9-496A-A5B5-531D3DA29C8C} = {111802A3-E762-4E68-83F9-37BD9E151EE8}
+		{73C0545B-AA84-4205-829C-92608954E07A} = {111802A3-E762-4E68-83F9-37BD9E151EE8}
+		{A2B5124D-5A37-4839-BA28-96CFFA557483} = {E1D38655-9384-4EFD-B070-613A226501F6}
+		{55C7F809-76AC-4E90-87CB-D143E885FB34} = {E1D38655-9384-4EFD-B070-613A226501F6}
+		{24DE589B-ABDB-46B4-8CB1-031D76792F84} = {3CD62086-61B9-4604-B2E1-511397ED8840}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FB5A1FA5-78E9-496A-A5B5-531D3DA29C8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB5A1FA5-78E9-496A-A5B5-531D3DA29C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB5A1FA5-78E9-496A-A5B5-531D3DA29C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB5A1FA5-78E9-496A-A5B5-531D3DA29C8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73C0545B-AA84-4205-829C-92608954E07A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73C0545B-AA84-4205-829C-92608954E07A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73C0545B-AA84-4205-829C-92608954E07A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73C0545B-AA84-4205-829C-92608954E07A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2B5124D-5A37-4839-BA28-96CFFA557483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2B5124D-5A37-4839-BA28-96CFFA557483}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2B5124D-5A37-4839-BA28-96CFFA557483}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2B5124D-5A37-4839-BA28-96CFFA557483}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55C7F809-76AC-4E90-87CB-D143E885FB34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55C7F809-76AC-4E90-87CB-D143E885FB34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55C7F809-76AC-4E90-87CB-D143E885FB34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55C7F809-76AC-4E90-87CB-D143E885FB34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24DE589B-ABDB-46B4-8CB1-031D76792F84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24DE589B-ABDB-46B4-8CB1-031D76792F84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24DE589B-ABDB-46B4-8CB1-031D76792F84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24DE589B-ABDB-46B4-8CB1-031D76792F84}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
