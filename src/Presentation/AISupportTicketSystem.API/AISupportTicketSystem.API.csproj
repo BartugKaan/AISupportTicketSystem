@@ -1,17 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-    </PropertyGroup>
+      <UserSecretsId>a4817eb3-f8af-4688-9ef7-fb016b17696b</UserSecretsId>
+  </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Controllers\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Core\AISupportTicketSystem.Application\AISupportTicketSystem.Application.csproj" />
+      <ProjectReference Include="..\..\Core\AISupportTicketSystem.Domain\AISupportTicketSystem.Domain.csproj" />
+      <ProjectReference Include="..\..\External\AISupportTicketSystem.Infrastructure\AISupportTicketSystem.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\External\AISupportTicketSystem.Persistence\AISupportTicketSystem.Persistence.csproj" />
     </ItemGroup>
 
 </Project>

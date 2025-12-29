@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Core\AISupportTicketSystem.Application\AISupportTicketSystem.Application.csproj" />
+      <ProjectReference Include="..\..\Core\AISupportTicketSystem.Domain\AISupportTicketSystem.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

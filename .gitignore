@@ -1,5 +1,30 @@
+## .NET
 bin/
 obj/
-/packages/
-riderModule.iml
-/_ReSharper.Caches/
+*.user
+*.userosscache
+*.suo
+*.cache
+
+## IDE
+.idea/
+.vs/
+*.swp
+
+## Docker
+docker-compose.override.yml
+
+## Environment files
+.env
+*.env.local
+
+## Logs
+logs/
+*.log
+
+## MacOS
+.DS_Store
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
