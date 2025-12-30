@@ -1,4 +1,5 @@
 using AISupportTicketSystem.API.Middleware;
+using AISupportTicketSystem.Persistence.Extensions;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
@@ -10,6 +11,8 @@ builder.Host.UseSerilog((context, loggerConfiguration) =>
 {
     loggerConfiguration.ReadFrom.Configuration(context.Configuration);
 });
+
+builder.Services.AddPersistenceServices(builder.Configuration);
 
 builder.Services.AddHealthChecks()
     .AddNpgSql(
@@ -34,6 +37,7 @@ app.UseSerilogRequestLogging(options =>
 {
     options.MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
 });
+
 
 
 if (app.Environment.IsDevelopment())

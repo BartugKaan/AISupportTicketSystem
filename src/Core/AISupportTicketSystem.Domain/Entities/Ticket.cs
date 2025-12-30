@@ -1,5 +1,6 @@
 using AISupportTicketSystem.Domain.Common;
 using AISupportTicketSystem.Domain.Enums;
+using Pgvector;
 
 namespace AISupportTicketSystem.Domain.Entities;
 
@@ -14,14 +15,13 @@ public class Ticket : AuditableEntity
     public TicketPriority Priority { get; set; } = TicketPriority.Medium;
     public TicketSource Source { get; set; } = TicketSource.Web;
     
-    // AI tarafından belirlenen alanlar
     public SentimentType? Sentiment { get; set; }
     public double? SentimentScore { get; set; }
     public string? AiSuggestedCategory { get; set; }
     public string? AiSuggestedResponse { get; set; }
     
-    // Vector embedding (pgvector için)
-    public float[]? Embedding { get; set; }
+    // Vector embedding
+    public Vector? Embedding { get; set; }
     
     // Relationships
     public Guid CustomerId { get; set; }
