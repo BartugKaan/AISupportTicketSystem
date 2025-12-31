@@ -1,5 +1,6 @@
 using AISupportTicketSystem.API.Middleware;
 using AISupportTicketSystem.Persistence.Extensions;
+using AISupportTicketSystem.Persistence.Seed;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
@@ -30,6 +31,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+await DatabaseSeeder.SeedAsync(app.Services);
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
