@@ -1,4 +1,5 @@
 using AISupportTicketSystem.API.Middleware;
+using AISupportTicketSystem.Infrastructure.Extensions;
 using AISupportTicketSystem.Persistence.Extensions;
 using AISupportTicketSystem.Persistence.Seed;
 using HealthChecks.UI.Client;
@@ -14,6 +15,7 @@ builder.Host.UseSerilog((context, loggerConfiguration) =>
 });
 
 builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 builder.Services.AddHealthChecks()
     .AddNpgSql(
