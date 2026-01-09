@@ -1,5 +1,7 @@
 using System.Text;
+using AISupportTicketSystem.API.Filters;
 using AISupportTicketSystem.API.Middleware;
+using AISupportTicketSystem.Application.Extensions;
 using AISupportTicketSystem.Infrastructure.Extensions;
 using AISupportTicketSystem.Persistence.Extensions;
 using AISupportTicketSystem.Persistence.Seed;
@@ -20,6 +22,7 @@ builder.Host.UseSerilog((context, loggerConfiguration) =>
 });
 
 // Layer Specific services
+builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
@@ -54,8 +57,13 @@ builder.Services.AddHealthChecks()
         name: "redis",
         tags: new[] { "cache", "redis" });
 
+builder.Services.AddScoped<ValidationFilter>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ValidationFilter>();
+});
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
