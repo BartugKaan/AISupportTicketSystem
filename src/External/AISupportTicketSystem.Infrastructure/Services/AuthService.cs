@@ -3,6 +3,7 @@ using AISupportTicketSystem.Application.Interfaces;
 using AISupportTicketSystem.Domain.Entities;
 using AISupportTicketSystem.Infrastructure.Settings;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 
 namespace AISupportTicketSystem.Infrastructure.Services;
 
@@ -13,12 +14,12 @@ public class AuthService : IAuthService
     private readonly ITokenBlacklistService _tokenBlacklistService;
     private readonly JwtSettings _jwtSettings;
 
-    public AuthService(UserManager<ApplicationUser> userManager, IJwtService jwtService, ITokenBlacklistService tokenBlacklistService, JwtSettings jwtSettings)
+    public AuthService(UserManager<ApplicationUser> userManager, IJwtService jwtService, ITokenBlacklistService tokenBlacklistService, IOptions<JwtSettings> jwtSettings)
     {
         _userManager = userManager;
         _jwtService = jwtService;
         _tokenBlacklistService = tokenBlacklistService;
-        _jwtSettings = jwtSettings;
+        _jwtSettings = jwtSettings.Value;
     }
 
     public async Task<AuthResponse> LoginAsync(LoginRequest request)

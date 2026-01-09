@@ -6,4 +6,4 @@ public record AuthResponse(
     string? RefreshToken,
     DateTime? ExpiresAt,
     UserDto? User,
-    string? error);
+    string? Error);
