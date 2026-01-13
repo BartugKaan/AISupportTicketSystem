@@ -26,7 +26,6 @@
       <Folder Include="Features\Tickets\Queries\GetAllTickets\" />
       <Folder Include="Features\Tickets\Queries\GetMyTickets\" />
       <Folder Include="Features\Tickets\Queries\GetTicketById\" />
-      <Folder Include="Mappings\" />
     </ItemGroup>
 
 </Project>

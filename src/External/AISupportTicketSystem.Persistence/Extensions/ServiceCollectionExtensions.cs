@@ -1,5 +1,7 @@
+using AISupportTicketSystem.Application.Interfaces.Repositories;
 using AISupportTicketSystem.Domain.Entities;
 using AISupportTicketSystem.Persistence.Context;
+using AISupportTicketSystem.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -39,6 +41,11 @@ public static class ServiceCollectionExtensions
             })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
+        
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+        services.AddScoped<ITicketRepository, TicketRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }
