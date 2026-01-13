@@ -8,7 +8,17 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        var assembly = Assembly.GetExecutingAssembly();
+        
+        services.AddValidatorsFromAssembly(assembly);
+
+        services.AddMediatR(config =>
+        {
+            config.RegisterServicesFromAssemblies(assembly);
+        });
+
+        services.AddAutoMapper(assembly);
+        
         return services;
     }
 }

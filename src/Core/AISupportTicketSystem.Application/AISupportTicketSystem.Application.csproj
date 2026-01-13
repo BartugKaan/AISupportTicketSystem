@@ -11,8 +11,22 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="14.0.0" />
       <PackageReference Include="FluentValidation" Version="12.1.1" />
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+      <PackageReference Include="MediatR" Version="14.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Features\Tickets\Commands\AssignTicket\" />
+      <Folder Include="Features\Tickets\Commands\ChangeStatus\" />
+      <Folder Include="Features\Tickets\Commands\CreateTicket\" />
+      <Folder Include="Features\Tickets\Commands\DeleteTicket\" />
+      <Folder Include="Features\Tickets\Commands\UpdateTicket\" />
+      <Folder Include="Features\Tickets\Queries\GetAllTickets\" />
+      <Folder Include="Features\Tickets\Queries\GetMyTickets\" />
+      <Folder Include="Features\Tickets\Queries\GetTicketById\" />
+      <Folder Include="Mappings\" />
     </ItemGroup>
 
 </Project>
