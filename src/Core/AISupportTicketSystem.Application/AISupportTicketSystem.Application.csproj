@@ -17,10 +17,4 @@
       <PackageReference Include="MediatR" Version="14.0.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Features\Tickets\Queries\GetAllTickets\" />
-      <Folder Include="Features\Tickets\Queries\GetMyTickets\" />
-      <Folder Include="Features\Tickets\Queries\GetTicketById\" />
-    </ItemGroup>
-
 </Project>
