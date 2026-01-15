@@ -44,6 +44,7 @@ public static class ServiceCollectionExtensions
         
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<ITicketRepository, TicketRepository>();
+        services.AddScoped<ITicketMessageRepository, TicketMessageRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 

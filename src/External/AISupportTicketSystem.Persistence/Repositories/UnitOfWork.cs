@@ -8,6 +8,7 @@ public class UnitOfWork : IUnitOfWork
     private readonly ApplicationDbContext _dbContext;
     public ITicketRepository? _tickets;
     public ICategoryRepository? _categories;
+    public ITicketMessageRepository? _ticketMessages;
 
     public UnitOfWork(ApplicationDbContext dbContext)
     {
@@ -16,6 +17,7 @@ public class UnitOfWork : IUnitOfWork
 
     public ITicketRepository Tickets  => _tickets ??= new TicketRepository(_dbContext);
     public ICategoryRepository Categories => _categories ??= new CategoryRepository(_dbContext);
+    public ITicketMessageRepository TicketMessages => _ticketMessages ??= new TicketMessageRepository(_dbContext);
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

@@ -35,5 +35,12 @@ public class TicketMappingProfile : Profile
             .ForMember(dest => dest.Status, opt => opt.Ignore())
             .ForMember(dest => dest.CustomerId, opt => opt.Ignore())
             .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
+        
+        // TicketMessage -> TicketMessageDto
+        CreateMap<TicketMessage, TicketMessageDto>()
+            .ForMember(dest => dest.SenderName, 
+                opt => opt.MapFrom(src => src.Sender.FullName))
+            .ForMember(dest => dest.SenderEmail, 
+                opt => opt.MapFrom(src => src.Sender.Email));
     }
 }

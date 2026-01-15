@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using AISupportTicketSystem.Application.DTOs.Common;
 using AISupportTicketSystem.Application.DTOs.Tickets;
+using AISupportTicketSystem.Application.Features.Tickets.Commands.AddMessage;
 using AISupportTicketSystem.Application.Features.Tickets.Commands.AssignTicket;
 using AISupportTicketSystem.Application.Features.Tickets.Commands.ChangeStatus;
 using AISupportTicketSystem.Application.Features.Tickets.Commands.CreateTicket;
@@ -9,6 +10,7 @@ using AISupportTicketSystem.Application.Features.Tickets.Commands.UpdateTicket;
 using AISupportTicketSystem.Application.Features.Tickets.Queries.GetAllTickets;
 using AISupportTicketSystem.Application.Features.Tickets.Queries.GetMyTickets;
 using AISupportTicketSystem.Application.Features.Tickets.Queries.GetTicketById;
+using AISupportTicketSystem.Application.Features.Tickets.Queries.GetTicketMessages;
 using AISupportTicketSystem.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -200,5 +202,51 @@ public class TicketsController : ControllerBase
         
         _logger.LogInformation("Ticket {Id} status changed to {Status}", id, dto.Status);
         return Ok(result);
+    }
+
+    /// <summary>
+    /// Get messages for a ticket
+    /// </summary>
+    [HttpGet("{id:guid}/messages")]
+    [ProducesResponseType(typeof(IReadOnlyList<TicketMessageDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetMessages(Guid id)
+    {
+        var ticket = await _mediator.Send(new GetTicketByIdQuery(id));
+
+        if (ticket == null) return NotFound(new { message = "Ticket not found" });
+
+        if (IsInRole("Customer") && ticket.CustomerId != GetCurrentUserId()) return Forbid();
+
+        var includeInternal = !IsInRole("Customer");
+
+        var messages = await _mediator.Send(new GetTicketMessagesQuery(id, includeInternal));
+        return Ok(messages);
+    }
+
+    /// <summary>
+    /// Add a message to a Ticket
+    /// </summary>
+    [HttpPost("{id:guid}/messages")]
+    [ProducesResponseType(typeof(TicketDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> AddMessages(Guid id, [FromBody] CreateMessageDto dto)
+    {
+        var ticket = await _mediator.Send(new GetTicketByIdQuery(id));
+        if (ticket == null) return NotFound(new { messages = "Ticket not found" });
+
+        if (IsInRole("Customer") && ticket.CustomerId != GetCurrentUserId()) return Forbid();
+        
+        var isInternal = dto.IsInternal && !IsInRole("Customer");
+
+        var command = new AddMessageCommand(
+            id,
+            GetCurrentUserId(),
+            dto.Content,
+            isInternal);
+
+        var result = await _mediator.Send(command);
+
+        return CreatedAtAction(nameof(GetMessages), new { id }, result);
     }
 }
