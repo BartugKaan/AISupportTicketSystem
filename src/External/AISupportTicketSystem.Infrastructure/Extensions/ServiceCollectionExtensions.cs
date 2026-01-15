@@ -21,6 +21,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<ITokenBlacklistService, TokenBlacklistService>();
         services.AddSingleton<ICacheService, RedisCacheService>();
         services.AddSingleton<IRateLimitService, RateLimitService>();
+        services.AddSingleton<IAiService, OpenAIService>();
 
         return services;
     }
