@@ -11,6 +11,7 @@ public record TicketDto(
     TicketPriority Priority,
     TicketSource Source,
     SentimentType? Sentiment,
+    Guid CustomerId,
     string CustomerName,
     string CustomerEmail,
     Guid AssignedAgentName,
