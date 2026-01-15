@@ -1,4 +1,6 @@
+using AISupportTicketSystem.Application.Constants;
 using AISupportTicketSystem.Application.DTOs.Categories;
+using AISupportTicketSystem.Application.Interfaces;
 using AISupportTicketSystem.Application.Interfaces.Repositories;
 using AutoMapper;
 using MediatR;
@@ -9,19 +11,34 @@ public class GetAllCategoriesQueryHandler : IRequestHandler<GetAllCategoriesQuer
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly ICacheService _cacheService;
 
-    public GetAllCategoriesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public GetAllCategoriesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, ICacheService cacheService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _cacheService = cacheService;
     }
 
     public async Task<IReadOnlyList<CategoryDto>> Handle(GetAllCategoriesQuery request, CancellationToken cancellationToken)
     {
-        var categories = request.IncludeInactive
-            ? await _unitOfWork.Categories.GetCategoriesWithSubCategoriesAsync()
-            : await _unitOfWork.Categories.GetActiveCategoriesAsync();
+        if (request.IncludeInactive)
+        {
+            var allCategories = await _unitOfWork.Categories.GetCategoriesWithSubCategoriesAsync();
+            return _mapper.Map<IReadOnlyList<CategoryDto>>(allCategories);
+        }
+
+        var cacheKey = CacheKeys.CategoriesAll;
         
-        return _mapper.Map<IReadOnlyList<CategoryDto>>(categories);
+        var cachedCategories = await _cacheService.GetOrSetAsync(
+            cacheKey,
+            async () =>
+            {
+                var categories = await _unitOfWork.Categories.GetActiveCategoriesAsync();
+                return _mapper.Map<List<CategoryDto>>(categories);
+            },
+            TimeSpan.FromHours(1)); 
+
+        return cachedCategories;
     }
 }

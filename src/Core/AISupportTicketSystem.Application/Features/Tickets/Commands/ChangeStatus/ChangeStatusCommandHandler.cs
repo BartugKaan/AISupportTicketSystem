@@ -1,5 +1,7 @@
+using AISupportTicketSystem.Application.Constants;
 using AISupportTicketSystem.Application.DTOs.Tickets;
 using AISupportTicketSystem.Application.Exceptions;
+using AISupportTicketSystem.Application.Interfaces;
 using AISupportTicketSystem.Application.Interfaces.Repositories;
 using AISupportTicketSystem.Domain.Enums;
 using AutoMapper;
@@ -13,19 +15,22 @@ public class ChangeStatusCommandHandler : IRequestHandler<ChangeStatusCommand, T
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<ChangeStatusCommandHandler> _logger;
+    private readonly ICacheService _cacheService;
 
-    public ChangeStatusCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, ILogger<ChangeStatusCommandHandler> logger)
+    public ChangeStatusCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, ILogger<ChangeStatusCommandHandler> logger, ICacheService cacheService)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _cacheService = cacheService;
     }
 
     public async Task<TicketDto> Handle(ChangeStatusCommand request, CancellationToken cancellationToken)
     {
         var ticket = await _unitOfWork.Tickets.GetByIdWithDetailsAsync(request.TicketId);
 
-        if (ticket == null) throw new NotFoundException("Ticket", request.TicketId);
+        if (ticket == null)
+            throw new NotFoundException("Ticket", request.TicketId);
 
         var oldStatus = ticket.Status;
         ticket.Status = request.Status;
@@ -40,11 +45,16 @@ public class ChangeStatusCommandHandler : IRequestHandler<ChangeStatusCommand, T
                 ticket.ClosedAt = DateTime.UtcNow;
                 break;
         }
-        
+
         await _unitOfWork.Tickets.UpdateAsync(ticket);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-        
-        _logger.LogInformation("Ticket {TicketNumber} status changed from {OldStatus} to {NewStatus}.}", ticket.TicketNumber, oldStatus, request.Status);
-        return _mapper.Map<TicketDto>(ticket);
+
+        await _cacheService.RemoveAsync(CacheKeys.Ticket(request.TicketId));
+
+        _logger.LogInformation("Ticket {TicketNumber} status changed from {OldStatus} to {NewStatus}", 
+            ticket.TicketNumber, oldStatus, request.Status);
+
+        var updatedTicket = await _unitOfWork.Tickets.GetByIdWithDetailsAsync(ticket.Id);
+        return _mapper.Map<TicketDto>(updatedTicket);
     }
 }

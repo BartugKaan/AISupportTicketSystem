@@ -19,6 +19,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddSingleton<ITokenBlacklistService, TokenBlacklistService>();
+        services.AddSingleton<ICacheService, RedisCacheService>();
 
         return services;
     }
