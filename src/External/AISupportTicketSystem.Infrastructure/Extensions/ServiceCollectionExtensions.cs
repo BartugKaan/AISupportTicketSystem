@@ -20,6 +20,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IAuthService, AuthService>();
         services.AddSingleton<ITokenBlacklistService, TokenBlacklistService>();
         services.AddSingleton<ICacheService, RedisCacheService>();
+        services.AddSingleton<IRateLimitService, RateLimitService>();
 
         return services;
     }
